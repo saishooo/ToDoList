@@ -14,5 +14,5 @@ def main_function(tskdata):
 
 #ファイルの読み込み
 def write_json(a,b,c):
-    with open("data.json", mode="w") as json_file:
+    with open("data.json", mode="a") as json_file:
         json_file.writelines(f"{a},{b},{c}")
