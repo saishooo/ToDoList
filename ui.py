@@ -3,7 +3,6 @@ from main import main_function
 from main import TskData
 import csv
 
-
 #入力内容を読み出し処理
 def get_values():
     values_tsk=str(input_tsk.get())
@@ -13,21 +12,36 @@ def get_values():
     tsk_management=TskData(values_tsk,values_day,values_juge)
     main_function(tsk_management)
     i=7 #タスク進行の最終行
-    read_load(i)
+    z=read_load_now(i)
+    read_load_achived(z)
 
-def read_load(a):
+#未達成なタスクを表示する関数
+def read_load_now(a):
     with open("data.csv",mode="r") as read_csv:
         dataread=csv.reader(read_csv)   #csvファイルの読み出し
         rows=list(dataread)     #csvファイル内のデータをリスト化
         #出力s
         for s in rows:
-            #完了列に1があったら除外する処理はここに追加
-            for j in range(3):
-                label_tsk_csv=ui.Label(root,text=s[j])
-                label_tsk_csv.grid(row=a,column=j)
+            if(s[2]=="0"):  #実行済みのものは表示しない
+                for j in range(3):
+                        label_tsk_csv=ui.Label(root,text=s[j])
+                        label_tsk_csv.grid(row=a,column=j)
             a+=1
     return a
 
+#達成済みタスクを表示する関数
+def read_load_achived(a):
+    with open("data.csv",mode="r") as read_csv:
+        dataread=csv.reader(read_csv)   #csvファイルの読み出し
+        rows=list(dataread)     #csvファイル内のデータをリスト化
+        #出力s
+        for s in rows:
+            if(s[2]=="1"):  #実行済みのものは表示しない
+                for j in range(3):
+                        label_tsk_csv=ui.Label(root,text=s[j])
+                        label_tsk_csv.grid(row=a,column=j)
+            a+=1
+    return a
 
 root=ui.Tk()
 root.title(u"ToDoリスト")
@@ -66,13 +80,26 @@ i+=2
 #進行中タスク表示ラベル
 label_tsk_now=ui.Label(root,text="進行中タスク")
 label_tsk_now.grid(row=i,column=0)
-label_tsk_now=ui.Label(root,text="期日")
-label_tsk_now.grid(row=i,column=1)
-label_tsk_now=ui.Label(root,text="完了")
-label_tsk_now.grid(row=i,column=2)
+label_day_now=ui.Label(root,text="期日")
+label_day_now.grid(row=i,column=1)
+label_juge_now=ui.Label(root,text="完了")
+label_juge_now.grid(row=i,column=2)
 i+=1
 
-#進行中タスク表示
-i=read_load(i)
+#未達成タスク表示
+i=read_load_now(i)
+
+#達成済みタスクの表示
+label_tsk_achived=ui.Label(root,text="終了タスク")
+label_tsk_achived.grid(row=i,column=0)
+label_day_achived=ui.Label(root,text="期日")
+label_day_achived.grid(row=i,column=1)
+label_juge_achived=ui.Label(root,text="完了")
+label_juge_achived.grid(row=i,column=2)
+i+=1
+
+#達成済みタスク表示
+i=read_load_achived(i)
+
 
 root.mainloop()
