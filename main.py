@@ -1,5 +1,5 @@
 import ui
-import json
+import csv
 
 class TskData:
     def __init__(self,tsk,day,juge):
@@ -14,5 +14,5 @@ def main_function(tskdata):
 
 #ファイルの読み込み
 def write_json(a,b,c):
-    with open("data.json", mode="a") as json_file:
-        json_file.writelines(f"{a},{b},{c}")
+    with open("data.csv", mode="a") as write_csv_file:
+        write_csv_file.writelines(f"{a},{b},{c}\n")
