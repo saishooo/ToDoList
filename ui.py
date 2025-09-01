@@ -19,42 +19,17 @@ def read_load_now(a):
     with open("data.csv",mode="r") as read_csv:
         dataread=csv.reader(read_csv)   #csvファイルの読み出し
         rows=list(dataread)     #csvファイル内のデータをリスト化
-        #出力s
-        for s in rows:
-            if(s[2]=="0"):  #実行済みのものは表示しない
-                for j in range(3):
-                        #ここにデータを削除してから書き込むようにする　destroy
-                        label_tsk_csv=ui.Label(root,text=s[j])
-                        label_tsk_csv.grid(row=a,column=j)
-            a+=1
-    label_road(a)
-    return a
+        #出力
+        if not rows:    #リスト内がからの場合は実行しない
+             return 0
+        else:   #リストが空でなければ実行する
+            for s in rows:
+                if(s[2]=="0"):  #実行済みのものは表示しない
+                    for j in range(3):
+                            label_tsk_csv=ui.Label(root,text=s[j])
+                            label_tsk_csv.grid(row=a,column=j)
+                a+=1
 
-#達成済みタスクを表示する関数
-def label_road(a):
-    #ここのラベルの名前をlabel_tsk_csvにする
-    label_tsk_achived=ui.Label(root,text="終了タスク")
-    label_tsk_achived.grid(row=a,column=0)
-    label_day_achived=ui.Label(root,text="期日")
-    label_day_achived.grid(row=a,column=1)
-    label_juge_achived=ui.Label(root,text="完了")
-    label_juge_achived.grid(row=a,column=2)
-    a+=1
-    read_load_achived(a)
-    return a
-
-def read_load_achived(a):
-    with open("data.csv",mode="r") as read_csv:
-        dataread=csv.reader(read_csv)   #csvファイルの読み出し
-        rows=list(dataread)     #csvファイル内のデータをリスト化
-        #出力s
-        for s in rows:
-            if(s[2]=="1"):  #実行済みのものは表示しない
-                for j in range(3):
-                        label_tsk_csv=ui.Label(root,text=s[j])
-                        label_tsk_csv.grid(row=a,column=j)
-            a+=1
-    return a
 
 root=ui.Tk()
 root.title(u"ToDoリスト")
@@ -79,16 +54,6 @@ i+=1
 button_add=ui.Button(root,text="タスクの追加",command=get_values)
 button_add.grid(row=i,column=0)
 i+=1
-
-#タスク完了ボタン
-button_comp=ui.Button(root,text="タスクの完了")
-button_comp.grid(row=i+1,column=0)
-i+=1
-
-#タスク削除ボタン
-button_del=ui.Button(root,text="タスクの削除")
-button_del.grid(row=i+1,column=0)
-i+=2
 
 #進行中タスク表示ラベル
 label_tsk_now=ui.Label(root,text="進行中タスク")
