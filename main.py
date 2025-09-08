@@ -9,10 +9,10 @@ class TskData:
 
 #main処理
 def main_function(tskdata):
-    write_json(tskdata.tsk,tskdata.day,tskdata.juge)
+    write_csv(tskdata.tsk,tskdata.day,tskdata.juge)
 
 
 #ファイルの読み込み
-def write_json(a,b,c):
+def write_csv(a,b,c):
     with open("data.csv", mode="a") as write_csv_file:
         write_csv_file.writelines(f"{a},{b},{c}\n")
